@@ -1,0 +1,38 @@
+version: '3'
+services:
+    # PHP + Apache
+    webserver:
+        build: php
+        dns:
+            - <internal_mmi_dns_entries>
+            - 8.8.8.8
+            - 8.8.4.4
+        ports:
+            - "80:80"
+        volumes:
+            - <path_to_sources>:/var/www/html
+        depends_on:
+          - redisdb
+    # Cache Server
+    redisdb:
+        image: redis:latest
+    # Admin Tools
+    phpredmin:
+        image: sasanrose/phpredmin
+        environment:
+            - PHPREDMIN_DATABASE_REDIS_0_HOST=redisdb
+        ports:
+            - "8080:80"
+        depends_on:
+            - redisdb
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin
+        env_file: .env
+        environment:
+            PMA_ARBITRARY: '1'
+            PMA_HOST: 'mysqldb'
+            PMA_PORT: '3306'
+            PMA_USER: 'root'
+            PMA_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+        ports:
+            - "8081:80"
