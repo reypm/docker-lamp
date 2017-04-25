@@ -1,5 +1,5 @@
 #JetBrains
-.idea/*
+.idea/
 .idea/tasks.xml
 .idea/dictionaries
 .idea/jsLibraryMappings.xml
@@ -20,8 +20,3 @@ com_crashlytics_export_strings.xml
 crashlytics.properties
 crashlytics-build.properties
 fabric.properties
-
-#Docker related
-docker-compose.yml
-dump/*
-.env
