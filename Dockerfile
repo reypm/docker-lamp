@@ -11,7 +11,11 @@ ENV APACHE_RUN_USER=www-data \
 
 RUN apt-get update && \
     apt-get -y install software-properties-common \
-    xvfb && \
+    xvfb \
+    locales && \
+    locale-gen en_US.UTF-8 && \
+    export LC_ALL=en_US.UTF-8 && \
+    export LANG=en_US.UTF-8 && \
     add-apt-repository ppa:ondrej/php && \
     apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get -y --allow-unauthenticated install \
