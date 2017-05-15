@@ -9,6 +9,7 @@
     "phploc/phploc": "^3.0",
     "sebastian/phpdcd": "*",
     "sebastian/phpcpd": "^3.0",
-    "hirak/prestissimo": "^0.3"
+    "hirak/prestissimo": "^0.3",
+    "phpunit/phpunit": "^6.1"
   }
 }
