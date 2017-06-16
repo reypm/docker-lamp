@@ -25,6 +25,7 @@ RUN apt-get update && \
     php7.1-curl \
     php7.1-cli \
     php7.1-gd \
+    php7.1-bcmath \
     php7.1-json \
     php7.1-ldap \
     php7.1-intl \
@@ -37,6 +38,8 @@ RUN apt-get update && \
     php7.1-soap \
     libapache2-mod-php7.1 \
     php-pear \
+    curl \
+    git \
     wget \
     nano \
     wkhtmltopdf \
