@@ -23,7 +23,6 @@ RUN apt-get update && \
     php7.1 \
     php7.1-dev \
     php7.1-curl \
-    php7.1-apc \
     php7.1-cli \
     php7.1-gd \
     php7.1-bcmath \
@@ -49,8 +48,7 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/*
 RUN pecl install mongodb && \
     pecl install xdebug && \
-    pecl install apcu && \
-    pecl install apcu_bc-beta
+    pecl install apcu
 COPY config /
 RUN sh /usr/local/bin/install.sh
 WORKDIR /var/www/html
