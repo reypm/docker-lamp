@@ -48,7 +48,8 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/*
 RUN pecl install mongodb && \
     pecl install xdebug && \
-    pecl install apcu
+    pecl install apcu && \
+    pecl install apcu_bc-beta
 COPY config /
 RUN sh /usr/local/bin/install.sh
 WORKDIR /var/www/html
