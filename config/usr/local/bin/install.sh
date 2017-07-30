@@ -25,7 +25,7 @@ export COMPOSER_ALLOW_XDEBUG=1
 export COMPOSER_DISABLE_XDEBUG_WARN=1
 
 # Install Global PHP Development Libraries
-composer global install --optimize-autoloader
+composer global install --prefer-dist --no-dev --no-progress --no-suggest --optimize-autoloader --classmap-authoritative --no-interaction
 composer clear-cache
 
 exec "$@"
