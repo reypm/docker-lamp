@@ -2,7 +2,7 @@ version: '3.3'
 services:
     webserver:
       build:
-        context: ./docker
+        context: .
       dns:
         - 8.8.8.8
         - 8.8.4.4
