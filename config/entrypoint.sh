@@ -47,6 +47,31 @@ if  [ -d "$composer_cache_dir" ]; then
     chmod -R g+w "$composer_cache_dir"
 fi
 
+composer_cache_dir="/var/www/.composer"
+mkdir -p "$composer_cache_dir"
+chown -R www-data:root "$composer_cache_dir"
+
+if  [ -d "$composer_cache_dir" ]; then
+    chgrp -R www-data "$composer_cache_dir"
+    chmod -R g+w "$composer_cache_dir"
+fi
+
+##################################################################
+# Setup CronJobs
+##################################################################
+# Make Symfon Console available from every where
+ln -sfn /var/www/html/oneview_symfony/bin/console /bin/sfconsole
+chmod 0644 /etc/cron.d/api_command-cron
+
+# Disable this cronjob if the ENV variable is false
+if [ "${ENABLE_API_CRON}" == "false" ]
+then
+    # Disable the cronjob
+    sed -i '/0/s/^/#/g' /etc/cron.d/api_command-cron
+fi
+
+echo "API Cron Status: ${ENABLE_API_CRON}"
+
 ##################################################################
 # Enable rewrite
 ##################################################################

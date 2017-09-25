@@ -1,0 +1,21 @@
+version: '3.3'
+services:
+    webserver:
+      build:
+        context: ./docker
+      dns:
+        - 8.8.8.8
+        - 8.8.4.4
+      ports:
+        - "80:80"
+      volumes:
+        - ~/sources/mmi:/var/www/html
+      restart: on-failure
+      env_file: .env
+      environment:
+          UID: ${UID}
+          GID: ${GID}
+          SERVER_URL: ${SERVER_URL}
+          SERVER_SCHEME: ${SERVER_SCHEME}
+          HTTP_PORT: ${HTTP_PORT}
+          ENABLE_API_CRON: ${ENABLE_API_CRON}

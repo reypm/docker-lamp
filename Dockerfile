@@ -50,6 +50,7 @@ RUN pecl install mongodb && \
     pecl install xdebug && \
     pecl install apcu
 COPY config /
+RUN chmod 0644 /etc/cron.d/api_command-cron
 RUN sh /usr/local/bin/install.sh
 WORKDIR /var/www/html
 EXPOSE 80 9001
