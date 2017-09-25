@@ -42,6 +42,7 @@ RUN apt-get update && \
     git \
     wget \
     nano \
+    cron \
     wkhtmltopdf \
     pkg-config && \
     apt-get clean && \
