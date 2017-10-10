@@ -2,6 +2,10 @@
 
 set -e
 
+# Install Symfony Installer
+curl -LsS https://symfony.com/installer -o /usr/local/bin/symfony
+chmod a+x /usr/local/bin/symfony
+
 # Install Composer
 EXPECTED_SIGNATURE=$(wget -q -O - https://composer.github.io/installer.sig)
 php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"

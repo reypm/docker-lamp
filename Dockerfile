@@ -1,6 +1,5 @@
 FROM ubuntu:16.04
 
-# Set Apache environment variables (can be changed on docker run with -e)
 ENV APACHE_RUN_USER=www-data \
     APACHE_RUN_GROUP=www-data \
     APACHE_LOG_DIR=/var/log/apache2 \
@@ -41,17 +40,13 @@ RUN apt-get update && \
     curl \
     git \
     wget \
-    nano \
-    cron \
     wkhtmltopdf \
     pkg-config && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 RUN pecl install mongodb && \
-    pecl install xdebug && \
-    pecl install apcu
+    pecl install xdebug
 COPY config /
-RUN chmod 0644 /etc/cron.d/api_command-cron
 RUN sh /usr/local/bin/install.sh
 WORKDIR /var/www/html
 EXPOSE 80 9001
