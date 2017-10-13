@@ -61,7 +61,8 @@ fi
 ##################################################################
 # Make Symfon Console available from every where
 ln -sfn /var/www/html/oneview_symfony/bin/console /bin/sfconsole
-chmod 0644 /etc/cron.d/api_command-cron
+
+chmod 0644 /etc/cron.d/*
 
 # Disable this cronjob if the ENV variable is false
 if [ "${ENABLE_API_CRON}" == "false" ]
@@ -71,8 +72,6 @@ then
 fi
 
 echo "API Cron Status: ${ENABLE_API_CRON}"
-
-chmod -R 777 /var/lib/php/sessions
 
 ##################################################################
 # Enable rewrite

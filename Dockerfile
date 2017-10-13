@@ -1,4 +1,5 @@
 FROM ubuntu:16.04
+LABEL maintainer="Reynier Perez <reynierpm@gmail.com>"
 
 ENV APACHE_RUN_USER=www-data \
     APACHE_RUN_GROUP=www-data \
@@ -9,7 +10,7 @@ ENV APACHE_RUN_USER=www-data \
     PATH="/root/.composer/vendor/bin:${PATH}"
 
 RUN apt-get update && \
-    apt-get -y install software-properties-common \
+    apt-get -y -qq --force-yes install software-properties-common \
     xvfb \
     locales && \
     locale-gen en_US.UTF-8 && \
@@ -40,14 +41,32 @@ RUN apt-get update && \
     curl \
     git \
     wget \
+    cron \
+    supervisor \
     wkhtmltopdf \
     pkg-config && \
     apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
+    apt-get autoremove && \
+    rm -rf /var/lib/apt/lists/* && \
+    sed -i 's/^\(\[supervisord\]\)$/\1\nnodaemon=true/' /etc/supervisor/supervisord.conf
+
+# Install extra PHP extensions from PECL
 RUN pecl install mongodb && \
     pecl install xdebug
+
+# Copy the content of config to / inside the container
 COPY config /
+
+# Run this script on image building
 RUN sh /usr/local/bin/install.sh
+
+# Define mountable directories.
+VOLUME ["/etc/supervisor/conf.d"]
+
+# Define working directory.
 WORKDIR /var/www/html
+
+# Listens on the specified network ports at runtime.
 EXPOSE 80 9001
+
 ENTRYPOINT bash -C '/entrypoint.sh';'bash'
