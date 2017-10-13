@@ -24,7 +24,13 @@ echo "GID: $gid"
 ##################################################################
 # Setup permissions
 ##################################################################
-data_dir="/var/www/html"
+data_dir="/var/www"
+
+if [ ! -d "$data_dir" ]; then
+  mkdir -p "$data_dir"
+  echo 'Directory has been created'
+fi
+
 usermod -u "$uid" www-data && groupmod -g "$gid" www-data
 chown -R www-data:root "$data_dir"
 
@@ -56,31 +62,9 @@ if  [ -d "$composer_cache_dir" ]; then
     chmod -R g+w "$composer_cache_dir"
 fi
 
-##################################################################
-# Setup CronJobs
-##################################################################
-# Make Symfon Console available from every where
-ln -sfn /var/www/html/oneview_symfony/bin/console /bin/sfconsole
-
-chmod 0644 /etc/cron.d/*
-
-# Disable this cronjob if the ENV variable is false
-if [ "${ENABLE_API_CRON}" == "false" ]
-then
-    # Disable the cronjob
-    sed -i '/0/s/^/#/g' /etc/cron.d/api_command-cron
+# Keep PHP running
+if [ "${1#-}" != "$1" ]; then
+    set -- php "$@"
 fi
 
-echo "API Cron Status: ${ENABLE_API_CRON}"
-
-##################################################################
-# Enable rewrite
-##################################################################
-a2enmod rewrite expires
-
-##################################################################
-# Apache gets grumpy about PID files pre-existing
-##################################################################
-rm -f /var/run/apache2/apache2.pid
-
-source /etc/apache2/envvars && exec /usr/sbin/apache2 -DFOREGROUND "$@"
+exec "$@"
