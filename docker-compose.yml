@@ -13,3 +13,5 @@ services:
       environment:
           UID: ${UID}
           GID: ${GID}
+      tty: true
+      stdin_open: true
